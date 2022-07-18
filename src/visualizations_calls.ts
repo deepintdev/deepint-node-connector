@@ -40,6 +40,7 @@ const postWorkspaceVisualizations = async (idWorkspace:string,visualization:Visu
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(visualization),
@@ -82,6 +83,7 @@ const postWorkspaceVisualizationById = async (idWorkspace:string,idVisualization
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(visualization),
@@ -124,6 +126,7 @@ const postCloneVisualizationById = async (idWorkspace:string,idVisualization:str
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(name),

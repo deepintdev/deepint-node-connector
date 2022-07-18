@@ -40,6 +40,7 @@ import { AlertResult, Alerts, AlertsImport, AlertsInstances, ResponseError, Resu
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(alert),
@@ -82,6 +83,7 @@ import { AlertResult, Alerts, AlertsImport, AlertsInstances, ResponseError, Resu
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(alert),

@@ -40,6 +40,7 @@ const postWorkspaceModels = async (idWorkspace: string, model:ModelsImport ) => 
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(model),
@@ -82,6 +83,7 @@ const postWorkspaceModelById = async (idWorkspace: string, idModel: string,model
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(model),
@@ -169,6 +171,7 @@ const postModelBatchPredict = async (idWorkspace: string,idModel: string,data:Mo
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(data),
@@ -191,6 +194,7 @@ const postModelPredict1d = async (idWorkspace: string,idModel: string,data:Model
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(data),
