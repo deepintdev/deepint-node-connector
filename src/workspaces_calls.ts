@@ -37,6 +37,7 @@ const postWorkspaces = async (name: string="",description: string="") => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN, 
             'x-deepint-organization': Config.getInstance().X_DEEPINT_ORGANIZATION
         },
@@ -65,6 +66,7 @@ const postWorkspaces = async (name: string="",description: string="") => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN, 
             'x-deepint-organization': Config.getInstance().X_DEEPINT_ORGANIZATION
         },
@@ -117,6 +119,7 @@ const postWorkspaces = async (name: string="",description: string="") => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN, 
         },
         body: JSON.stringify({
@@ -164,6 +167,7 @@ const postWorkspaces = async (name: string="",description: string="") => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(iframe)
@@ -202,6 +206,7 @@ const postWorkspaces = async (name: string="",description: string="") => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify({

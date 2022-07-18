@@ -40,6 +40,7 @@ const postWorkspaceDashboards = async (idWorkspace: string, dashboard: Dashboard
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(dashboard),
@@ -82,6 +83,7 @@ const postWorkspaceDashboardById = async (idWorkspace: string, idDashboard: stri
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(dashboard),
@@ -127,6 +129,7 @@ const postDashboardClone = async (idWorkspace: string, idDashboard: string, name
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(name),

@@ -41,6 +41,7 @@ const postWorkspaceSource = async (idWorkspace:string,source:SourceToAdd)=> {
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(source)
@@ -62,6 +63,7 @@ const postSourceClone = async (idWorkspace:string,idSource:string,name:string=""
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify({
@@ -84,6 +86,7 @@ const postSourceDerived = async (idWorkspace:string, source:SourceDerived) => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(source)
@@ -104,6 +107,7 @@ const postSourceExternal = async (idWorkspace:string, source:SourceExternal) => 
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(source)
@@ -125,6 +129,7 @@ const postSourceOther = async (idWorkspace:string, source:SourceOther) => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(source)
@@ -168,6 +173,7 @@ const postWorkspaceSourceById = async (idWorkspace:string,idSource:string,source
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(source)
@@ -230,6 +236,7 @@ const postConnectionSourceById = async (idWorkspace:string,idSource:string,conne
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(connection)
@@ -273,6 +280,7 @@ const postAutoUpdateSourceById = async (idWorkspace:string,idSource:string, conf
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(configuration)
@@ -295,6 +303,7 @@ const postTransformFeaturesSourcesById = async (idWorkspace:string,idSource:stri
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(features)
@@ -347,6 +356,7 @@ const postSourceInstances = async (idWorkspace:string,idSource:string,update: Up
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(update)
@@ -391,6 +401,7 @@ const postExternalSources = async (source: Array<Array<string|number|boolean>>)=
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-public-key': Config.getInstance().pubKey,
             'x-secret-key': Config.getInstance().secretKey,
         },
