@@ -48,6 +48,7 @@ const getProfile = async () => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(profile),

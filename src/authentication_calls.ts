@@ -14,6 +14,7 @@ const postLoginToken = async (token:BearerToken) => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(token),
     })
@@ -33,6 +34,7 @@ const postRevokeToken = async (token:RevokeToken) => {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify(token),
     })
