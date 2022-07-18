@@ -196,7 +196,6 @@ const postModelPredict1d = async (idWorkspace: string,idModel: string,data:Model
         body: JSON.stringify(data),
     })
     const respuesta:  {outputs:Array<number>}| ResponseError | Error = await response.json();
-    console.log(respuesta)
     return respuesta;
 }
 

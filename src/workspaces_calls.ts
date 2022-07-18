@@ -111,7 +111,7 @@ const postWorkspaces = async (name: string="",description: string="") => {
  * @param secret Secret for signing JSON web tokens
  * @returns Success Message or Error Message 
  */
- const postWorkspaceById = async (id: string,name: string="",description: string="",disableIndividualAlerts: boolean=false,secret: string="") => {
+ const postWorkspaceById = async (id: string, name: string="",description: string="",disableIndividualAlerts: boolean=false,secret: string="") => {
     const url = (new URL("workspace/".concat(id), Config.getInstance().deepintURL)).toString();
     const response: Response = await fetch(url, {
         method: 'POST',

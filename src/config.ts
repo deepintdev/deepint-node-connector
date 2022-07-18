@@ -43,6 +43,5 @@ export class Config {
 
         this.pubKey = process.env.SOURCE_PUB_KEY || "";
         this.secretKey = process.env.SOURCE_SECRET_KEY || "";
-
     }
 }
