@@ -212,7 +212,7 @@ For source configuration, set the following variables:
 
 </br>
 
-Module repository for more information: https://github.com/miguelchaveinte/appDeepint 
+Module repository for more information: https://github.com/deepintdev/deepint-node-connector
 
 Start by running `npm install` inside the module folder.
 `npm run tsc` to build the module,
