@@ -1,6 +1,6 @@
 {
   "name": "@airinstitute/deepint-connector",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "Deep Intelligence API calls",
   "main": "dist/index.js",
   "directories": {
