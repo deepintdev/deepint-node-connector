@@ -1,6 +1,6 @@
 {
-  "name": "api-deepint",
-  "version": "1.0.8",
+  "name": "@airinstitute/deepint-connector",
+  "version": "1.0.9",
   "description": "Deep Intelligence API calls",
   "main": "dist/index.js",
   "directories": {
@@ -8,9 +8,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/miguelchaveinte/appDeepint"
+    "url": "https://github.com/deepintdev/deepint-node-connector"
   },
-  "homepage": "https://github.com/miguelchaveinte/appDeepint#readme",
+  "homepage": "https://github.com/deepintdev/deepint-node-connector#readme",
   "scripts": {
     "pre": "tsc && node build/tasks_calls.js && node build/workspaces_calls.js && node build/sources_calls.js && node build/visualizations_calls.js && node build/dashboards_calls.js && node build/models_calls.js && node build/alerts_calls.js && node build/emails_calls.js  && node build/authentication_calls.js",
     "dev": "ts-node-dev src/tasks_calls.ts",
