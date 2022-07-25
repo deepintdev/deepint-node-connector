@@ -49,7 +49,7 @@ It encapsulates by means of functions the different calls to the API in order to
 </br>
 
 ---
-## ✅ Install
+### ✅ Install
 ---
 
 </br>
@@ -61,7 +61,7 @@ npm i @airinstitute/deepint-connector
 </br>
 
 ---
-## 🚩 Usage
+### 🚩 Usage
 ---
 
 </br>
@@ -207,7 +207,7 @@ For source configuration, set the following variables:
 </br>
 
 ---
-## ⌨️ Development Commands
+### ⌨️ Development Commands
 ---
 
 </br>
@@ -224,7 +224,7 @@ To get the documentation of the module functions: `npx typedoc --out docs` .
 </br>
 
 ---
-## 🌐 Built With
+### 🌐 Built With
 ---
 
 </br>
@@ -237,7 +237,7 @@ This project has been developed with TypeScript, Node Js and Express languages a
 </br>
 
 ---
-## 🙏 Acknowledgments
+### 🙏 Acknowledgments
 ---
 
 </br>
