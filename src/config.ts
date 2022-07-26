@@ -44,4 +44,20 @@ export class Config {
         this.pubKey = process.env.SOURCE_PUB_KEY || "";
         this.secretKey = process.env.SOURCE_SECRET_KEY || "";
     }
+
+    /**
+     * Sets the Deep Intelligence user authentication token value used to authenticate requests against the Deep Intelligence API
+     * @param token the token to set
+     */
+    public setToken(token: string) {
+        this.X_AUTH_TOKEN = token;
+    }
+
+    /**
+     * Sets the Deep Intelligence organization value used to authenticate requests against the Deep Intelligence API    
+     * @param organization the organization to set
+     */    
+    public setOrganization(organization: string) {
+        this.X_DEEPINT_ORGANIZATION = organization;
+    }
 }

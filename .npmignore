@@ -6,3 +6,5 @@ pruebas.ts
 docs/
 docs.zip
 src/
+tsconfig.json
+.github
