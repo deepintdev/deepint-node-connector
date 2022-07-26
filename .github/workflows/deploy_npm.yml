@@ -13,10 +13,12 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: git config user.email "support@deepint.net"
-      - run: git config user.name "Deep Intelligence"
+      - run: git config user.email ${{ secrets.GIT_EMAIL }}
+      - run: git config user.name ${{ secrets.GIT_NAME }}
       - run: npm version patch
+      - run: git push
       - run: npm ci
+      - run: npm run build
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

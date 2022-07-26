@@ -1,5 +1,5 @@
 
-# Deep Intelligence Node connector
+# Deep Intelligence Javascript SDK
 
 <div align="center">
     <img src="https://deepint.net/sites/default/files/logo2.svg" alt="Logo" width="300" height="200">
@@ -55,7 +55,7 @@ It encapsulates by means of functions the different calls to the API in order to
 </br>
 
 ```bash
-npm i @airinstitute/deepint-connector
+npm i @airinstitute/deepint-js-sdk
 ```
 
 </br>
@@ -70,7 +70,7 @@ npm i @airinstitute/deepint-connector
 ---
 
 ```js
-const deepint = require('@airinstitute/deepint-connector');
+const deepint = require('@airinstitute/deepint-js-sdk');
 deepint.getWorkspaces()
     .then(workspaces => {
         console.log(workspaces);
@@ -194,6 +194,20 @@ To configure the module, set the following environment variables:
 | X_DEEPINT_ORGANIZATION | Organization Token | 
 | DEEPINT_API_URL | Deep Intelligence API URL, default is `https://app.deepint.net/api/v1/` |
 
+In case you can not set environment variable and still want to use this SDK you can set this parameters directly on your code, like this:
+
+```js
+const deepint = require('@airinstitute/deepint-js-sdk');
+// If you did not setted X_AUTH_TOKEN && X_DEEPINT_ORGANIZATION env variables in order to be able to use the SDK you can set this variables on code in the next way
+
+deepint.Config.getInstance().setToken("<Your Deep Intelligence user token>");
+deepint.Config.getInstance().setOrganization("<Your Deep Intelligence organization ID>");
+
+// This method it is only for development use in production please set the envionment variables
+```
+
+Even this method is available and working its highly recomended to set this variables through environment variables due it's more safety and this last method if used with text plain can expose your Deep Intelligence credentials.
+
 </br>
 
 For source configuration, set the following variables:
@@ -254,7 +268,7 @@ To express our gratitude to the following people involved in this project:
 </br>
 
 <div align="center">
-  <a href="#deep-intelligence-node-connector">
+  <a href="#deep-intelligence-javascript-sdk">
     <img 
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Circle-icons-arrow-up.svg/512px-Circle-icons-arrow-up.svg.png?20160314153305" 
       alt="Logo"
