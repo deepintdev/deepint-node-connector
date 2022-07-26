@@ -1,6 +1,6 @@
 {
   "name": "@airinstitute/deepint-js-sdk",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Deep Intelligence API calls",
   "main": "dist/index.js",
   "directories": {
