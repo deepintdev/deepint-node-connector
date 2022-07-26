@@ -50,12 +50,12 @@ describe('POST - dashboards_calls', ()=>{
       
       const result = await postWorkspaceDashboards(bodyPOST.idWorkspace, bodyPOST.dashboard);
       expect(result).toBeDefined();
-      console.log("postWorkspaceDashboards: MyDashboardTest ",numRandom," >> ", result);
+      //console.log("postWorkspaceDashboards: MyDashboardTest ",numRandom," >> ", result);
 
       if("dashboard_id" in result){
         idDashboardTest = result.dashboard_id;
         idDashboardListTest.push(result.dashboard_id);
-        console.log("Añadir id: ", idDashboardTest, " -- List: ", idDashboardListTest);
+        //console.log("Añadir id: ", idDashboardTest, " -- List: ", idDashboardListTest);
       }
       else{
         stopTest = true;
@@ -117,7 +117,7 @@ describe('POST - dashboards_calls', ()=>{
       
       const result = await postWorkspaceDashboardById(bodyPOST.idWorkspace, bodyPOST.idDashboard, bodyPOST.dashboard);
       expect(result).toBeDefined();
-      console.log("postWorkspaceDashboardById >> ", result);
+      //console.log("postWorkspaceDashboardById >> ", result);
 
       if((result as ResultSuccess).result !== "success"){
         stopTest = true;
@@ -136,13 +136,13 @@ describe('POST - dashboards_calls', ()=>{
     if(!stopTest){
       let bodyPOST = {
         idWorkspace: idWorkspaceTest,
-        idDashboard: "00000182396d8c63-6d76b4cd-972f797c-f0941b24",
+        idDashboard: idDashboardTest,
         name: {name: "SCAN CLONE TEST"}
       }
       
       const result = await postDashboardClone(bodyPOST.idWorkspace, bodyPOST.idDashboard, bodyPOST.name);
       expect(result).toBeDefined();
-      console.log("postDashboardClone >> ", result); 
+      //console.log("postDashboardClone >> ", result); 
 
       if((result as ResultSuccessDashboard).result !== "success"){
         stopTest = true;
@@ -166,7 +166,7 @@ describe('GET - dashboards_calls', ()=>{
 
       const result = await getWorkspaceDashboards(bodyGET.id, bodyGET.page, bodyGET.limit);
       expect(result).toBeDefined();
-      console.log("getWorkspaceDashboards 2 >> ", result);
+      //console.log("getWorkspaceDashboards 2 >> ", result);
 
       if(("items" in result)){
         searchIdCloneDashboard((result as Dashboard));
@@ -189,7 +189,7 @@ describe('DELETE - dashboards_calls', ()=>{
     if(!stopTest){
       let deleteVisTest : deleteVisualization = 'no';
 
-      console.log("idDashboardListTest >> ", idDashboardListTest);
+      //console.log("idDashboardListTest >> ", idDashboardListTest);
 
       for (const item of idDashboardListTest) {
         let bodyDELETE = {
@@ -200,14 +200,11 @@ describe('DELETE - dashboards_calls', ()=>{
   
         const result = await deleteWorkspaceDashboardById(bodyDELETE.idWorkspace, bodyDELETE.idDashboard, bodyDELETE.deleteVis);
         expect(result).toBeDefined();
-        console.log("deleteWorkspaceDashboardById >> ", result);
+        //console.log("deleteWorkspaceDashboardById >> ", result);
   
         if((result as ResultSuccess).result !== "success"){
           stopTest = true;
           console.error("ERROR deleteWorkspaceDashboardById >> ", result);
-        }
-        else{
-          console.log("BORRADO >>> ", item);
         }
       }
     }
@@ -228,7 +225,7 @@ const searchIdCloneDashboard = (listItems: Dashboard) => {
   for (const item of listItems.items) {
     if(item.name === "SCAN CLONE TEST"){
       idDashboardListTest.push(item.id);
-      console.log("searchIdCloneDashboard >> Añadir id: ", item.id, " -- List: ", idDashboardListTest);
+      //console.log("searchIdCloneDashboard >> Añadir id: ", item.id, " -- List: ", idDashboardListTest);
     }
   }
 }

@@ -543,19 +543,25 @@ describe('GET - sources_calls', ()=>{
 describe('DELETE - dashboards_calls', ()=>{
   test('DELETE deleteWorkspaceSourceById!', async () => {
     if(!stopTest){
-      let bodyDELETE = {
-        idWorkspace: idWorkspaceTest,
-        idSource: idSourceTest,
-      }
 
-      const result = await deleteWorkspaceSourceById(bodyDELETE.idWorkspace, bodyDELETE.idSource);
-      expect(result).toBeDefined();
-      //console.log("deleteWorkspaceSourceById ",idSourceTest," >> ", result);
+      console.log("DELETE listIdSourceTest >> ", listIdSourceTest);
 
-      if(("result" in result)){
+      for (const item of listIdSourceTest) {
+        let bodyDELETE = {
+          idWorkspace: idWorkspaceTest,
+          idSource: item,
+        }
+  
+        const result = await deleteWorkspaceSourceById(bodyDELETE.idWorkspace, bodyDELETE.idSource);
+        expect(result).toBeDefined();
+        console.log("deleteWorkspaceSourceById ",item," >> ", result);
+        
         if((result as ResultSuccess).result !== "success"){
           stopTest = true;
           console.error("ERROR deleteWorkspaceSourceById >> ", result);
+        }
+        else{
+          console.log("BORRADO >>> ", item);
         }
       }
     }
