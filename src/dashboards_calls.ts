@@ -123,7 +123,7 @@ const deleteWorkspaceDashboardById = async (idWorkspace: string, idDashboard: st
  * @returns Success Message with the new dashboard id or Error Message
  */
 const postDashboardClone = async (idWorkspace: string, idDashboard: string, name: { name: string }) => {
-    let url = (new URL("workspace/".concat(idWorkspace + "/dashboard/" + idDashboard), Config.getInstance().deepintURL)).toString()
+    let url = (new URL("workspace/".concat(idWorkspace + "/dashboard/" + idDashboard + "/clone"), Config.getInstance().deepintURL)).toString()
 
     const response: Response = await fetch(url, {
         method: 'POST',
