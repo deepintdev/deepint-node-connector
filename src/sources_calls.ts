@@ -36,7 +36,7 @@ const getWorkspaceSources = async (idWorkspace:string,page:number=0,limit:number
  */
 const postWorkspaceSource = async (idWorkspace:string,source:SourceToAdd)=> {
     let url = (new URL("workspace/".concat(idWorkspace+"/sources"), Config.getInstance().deepintURL)).toString()
-
+    console.log(url);
     const response: Response = await fetch(url, {
         method: 'POST',
         headers: {  

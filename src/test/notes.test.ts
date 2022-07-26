@@ -1,7 +1,28 @@
+/* 
+*** Quitar/poner .skip en los métodos de test para bloquear/funcionar cada uno ***
+Cargar TODOS los test: npm run test
+Cargar sólo este fichero en específico: npm test -- notes.test.ts
+*/
+
 import {
   getSession,
-  getProfile
+  getProfile,
+  //postProfile
 } from '../account_calls';
+
+import {
+  //getWorkspaceAlerts, 
+  //postWorkspaceAlerts,
+  //getWorkspaceAlertById,
+  //postWorkspaceAlertById,
+  //deleteWorkspaceAlertById,
+  //getWorkspaceAlertInstances
+} from '../alerts_calls';
+
+import {
+  postLoginToken,
+  postRevokeToken
+} from '../authentication_calls';
 
 import {
   getWorkspaceDashboards, 
@@ -11,6 +32,24 @@ import {
   deleteWorkspaceDashboardById, 
   postDashboardClone
 } from '../dashboards_calls';
+
+import {
+  //getWorkspaceEmails, 
+  //postWorkspaceEmails,
+  //deleteWorkspaceEmailById
+} from '../emails_calls';
+
+import {
+  //getWorkspaceModels,
+  //postWorkspaceModels,
+  //getWorkspaceModelById,
+  //postWorkspaceModelById,
+  //deleteWorkspaceModelById,
+  //getModelEvaluation,
+  //getModelPredict,
+  //postModelBatchPredict,
+  //postModelPredict1d
+} from '../models_calls';
 
 import {
   getWorkspaceSources,
@@ -80,7 +119,9 @@ import {
   VisualizationConfig,
   tableVisualization, 
   tableVisualizationGroup, 
-  customSeries
+  customSeries,
+  BearerToken,
+  RevokeToken
 } from "../types"
 
 /* --------------------------- ACCOUNT CALLS ---------------------------*/
@@ -101,6 +142,46 @@ describe('GET - account_calls', ()=>{
   });
 });
 
+/* --------------------------- AUTHENTICATION CALLS ---------------------------*/
+
+describe('POST - authentication_calls', ()=>{
+  test.skip('POST postLoginToken!', async () => {
+
+    let bearerTokenTest : BearerToken = {
+      client_id: "",
+      client_secret: "",
+      bearer: "",
+      expiration: ""
+    };
+
+    let bodyPOST = {
+      token: bearerTokenTest
+    }
+
+    const result = await postLoginToken(bodyPOST.token);
+    expect(result).toBeDefined();
+    console.log("postLoginToken >> ", result);
+  });
+});
+
+describe('POST - authentication_calls', ()=>{
+  test.skip('POST postRevokeToken!', async () => {
+
+    let revokeTokenTest : RevokeToken = {
+      client_id: "",
+      client_secret: "",
+      auth_token: ""
+    };
+
+    let bodyPOST = {
+      token: revokeTokenTest
+    }
+
+    const result = await postRevokeToken(bodyPOST.token);
+    expect(result).toBeDefined();
+    console.log("postRevokeToken >> ", result);
+  });
+});
 
 /* --------------------------- DASHBOARDS CALLS ---------------------------*/
 
@@ -647,7 +728,7 @@ describe('POST - sources_calls', ()=>{
     
     const result = await postExternalSources(bodyPOST.source);
     expect(result).toBeDefined();
-    console.log("postExternalSources >> ", result); // NO DENEGADO ??
+    console.log("postExternalSources >> ", result);
   });
 });
 
@@ -886,7 +967,7 @@ describe('GET - visualizations_calls', ()=>{
 
     const result = await getWorkspaceVisualizationById(BODYGET.idWorkspace, BODYGET.idVisualization);
     expect(result).toBeDefined();
-    console.log("getWorkspaceVisualizationById >> ", result); // Me falta conocer algún id de visualización existente
+    console.log("getWorkspaceVisualizationById >> ", result);
   });
 });
 
@@ -1050,7 +1131,7 @@ describe('POST - visualizations_calls', ()=>{
     
     const result = await postWorkspaceVisualizationById(bodyPOST.idWorkspace, bodyPOST.idVisualization, bodyPOST.visualization);
     expect(result).toBeDefined();
-    console.log("postWorkspaceVisualizationById >> ", result); // Me falta conocer algún id de visualización existente
+    console.log("postWorkspaceVisualizationById >> ", result);
   });
 });
 
@@ -1064,7 +1145,7 @@ describe('DELETE - visualizations_calls', ()=>{
   
     const result = await deleteWorkspaceVisualizationById(BODYDELETE.idWorkspace, BODYDELETE.idVisualization);
     expect(result).toBeDefined();
-    console.log("deleteWorkspaceVisualizationById >> ", result); // Me falta conocer algún id de visualización existente
+    console.log("deleteWorkspaceVisualizationById >> ", result);
   });
 });
 
@@ -1079,7 +1160,7 @@ describe('POST - visualizations_calls', ()=>{
   
     const result = await postCloneVisualizationById(bodyPOST.idWorkspace, bodyPOST.idVisualization, bodyPOST.name);
     expect(result).toBeDefined();
-    console.log("postCloneVisualizationById >> ", result); // Me falta conocer algún id y nombre de visualización existente
+    console.log("postCloneVisualizationById >> ", result);
   });
 });
 
