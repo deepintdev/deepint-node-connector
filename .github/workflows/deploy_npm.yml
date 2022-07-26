@@ -3,11 +3,15 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - 'package.json'
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+        token: ${{ secrets.GIT_DEPLOY_TOKEN }}
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v3
         with:
