@@ -1,6 +1,6 @@
 {
   "name": "@airinstitute/deepint-js-sdk",
-  "version": "1.0.16",
+  "version": "1.0.25",
   "description": "Deep Intelligence API calls",
   "main": "dist/index.js",
   "directories": {
@@ -19,7 +19,13 @@
     "build": "tsc --outDir dist --module commonjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": ["deepint","api","deep intelligence","connector","node"],
+  "keywords": [
+    "deepint",
+    "api",
+    "deep intelligence",
+    "connector",
+    "node"
+  ],
   "author": "Miguel Chaveinte - Deep Intelligence",
   "license": "MIT",
   "devDependencies": {
