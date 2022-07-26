@@ -15,6 +15,7 @@ import {
 import {
   deleteVisualization, 
   ResultSuccess,
+  ResultSuccessDashboard,
   Dashboard
 } from "../types"
 
@@ -22,30 +23,10 @@ import {
 let stopTest: boolean = false;
 let idWorkspaceTest: string = "00000181f6998342-1f83dffe-8d32362e-252c9ebd";
 let idDashboardTest: string = "";
-let idDashboardCloneTest: string = "";
+let idDashboardListTest: Array<string> = [];
 
 /* --------------------------- DASHBOARDS CALLS ---------------------------*/
 
-describe('GET - dashboards_calls', ()=>{
-  test('GET getWorkspaceDashboards!', async () => {
-
-    let bodyGET = {
-      id: idWorkspaceTest,
-      page: 0,
-      limit: 500
-    }
-
-    const result = await getWorkspaceDashboards(bodyGET.id, bodyGET.page, bodyGET.limit);
-    expect(result).toBeDefined();
-    //console.log("getWorkspaceDashboards >> ", result);
-
-    if(!("items" in result)){
-      stopTest = true;
-      console.error("ERROR getWorkspaceDashboards >> ", result);
-    }
-  });
-});
-  
 describe('POST - dashboards_calls', ()=>{
   test('POST postWorkspaceDashboards!', async () => {
 
@@ -69,10 +50,12 @@ describe('POST - dashboards_calls', ()=>{
       
       const result = await postWorkspaceDashboards(bodyPOST.idWorkspace, bodyPOST.dashboard);
       expect(result).toBeDefined();
-      //console.log("postWorkspaceDashboards >> ", result);
+      console.log("postWorkspaceDashboards: MyDashboardTest ",numRandom," >> ", result);
 
       if("dashboard_id" in result){
         idDashboardTest = result.dashboard_id;
+        idDashboardListTest.push(result.dashboard_id);
+        console.log("Añadir id: ", idDashboardTest, " -- List: ", idDashboardListTest);
       }
       else{
         stopTest = true;
@@ -134,12 +117,11 @@ describe('POST - dashboards_calls', ()=>{
       
       const result = await postWorkspaceDashboardById(bodyPOST.idWorkspace, bodyPOST.idDashboard, bodyPOST.dashboard);
       expect(result).toBeDefined();
-      //console.log("postWorkspaceDashboardById >> ", result);
-      if(("result" in result)){
-        if((result as ResultSuccess).result !== "success"){
-          stopTest = true;
-          console.error("ERROR postWorkspaceDashboardById >> ", result);
-        }
+      console.log("postWorkspaceDashboardById >> ", result);
+
+      if((result as ResultSuccess).result !== "success"){
+        stopTest = true;
+        console.error("ERROR postWorkspaceDashboardById >> ", result);
       }
     }
     else{
@@ -154,18 +136,17 @@ describe('POST - dashboards_calls', ()=>{
     if(!stopTest){
       let bodyPOST = {
         idWorkspace: idWorkspaceTest,
-        idDashboard: idDashboardTest,
+        idDashboard: "00000182396d8c63-6d76b4cd-972f797c-f0941b24",
         name: {name: "SCAN CLONE TEST"}
       }
       
       const result = await postDashboardClone(bodyPOST.idWorkspace, bodyPOST.idDashboard, bodyPOST.name);
       expect(result).toBeDefined();
-      //console.log("postDashboardClone >> ", result);
-      if(("result" in result)){
-        if((result as ResultSuccess).result !== "success"){
-          stopTest = true;
-          console.error("ERROR postDashboardClone >> ", result);
-        }
+      console.log("postDashboardClone >> ", result); 
+
+      if((result as ResultSuccessDashboard).result !== "success"){
+        stopTest = true;
+        console.error("ERROR postDashboardClone >> ", result);        
       }
     }
     else{
@@ -175,7 +156,7 @@ describe('POST - dashboards_calls', ()=>{
 });
 
 describe('GET - dashboards_calls', ()=>{
-  test('GET getWorkspaceDashboards - 2!', async () => {
+  test('GET getWorkspaceDashboards 2!', async () => {
     if(!stopTest){
       let bodyGET = {
         id: idWorkspaceTest,
@@ -185,10 +166,10 @@ describe('GET - dashboards_calls', ()=>{
 
       const result = await getWorkspaceDashboards(bodyGET.id, bodyGET.page, bodyGET.limit);
       expect(result).toBeDefined();
-      //console.log("getWorkspaceDashboards 2 >> ", result);
+      console.log("getWorkspaceDashboards 2 >> ", result);
 
       if(("items" in result)){
-        idDashboardCloneTest = searchIdCloneDashboard((result as Dashboard));
+        searchIdCloneDashboard((result as Dashboard));
       }
       else{
         stopTest = true;
@@ -196,7 +177,7 @@ describe('GET - dashboards_calls', ()=>{
       }
     }
     else{
-      console.error("El test se ha detenido por un error en la consulta de POST getWorkspaceDashboards - 2 - dashboards_calls");
+      console.error("El test se ha detenido por un error en la consulta de GET getWorkspaceDashboards - 2 - dashboards_calls");
     }
 
   });
@@ -207,57 +188,31 @@ describe('DELETE - dashboards_calls', ()=>{
 
     if(!stopTest){
       let deleteVisTest : deleteVisualization = 'no';
-      
-      let bodyDELETE = {
-        idWorkspace: idWorkspaceTest,
-        idDashboard: idDashboardTest,
-        deleteVis: deleteVisTest
-      }
 
-      const result = await deleteWorkspaceDashboardById(bodyDELETE.idWorkspace, bodyDELETE.idDashboard, bodyDELETE.deleteVis);
-      expect(result).toBeDefined();
-      //console.log("deleteWorkspaceDashboardById >> ", result);
+      console.log("idDashboardListTest >> ", idDashboardListTest);
 
-      if(("result" in result)){
+      for (const item of idDashboardListTest) {
+        let bodyDELETE = {
+          idWorkspace: idWorkspaceTest,
+          idDashboard: item,
+          deleteVis: deleteVisTest
+        }
+  
+        const result = await deleteWorkspaceDashboardById(bodyDELETE.idWorkspace, bodyDELETE.idDashboard, bodyDELETE.deleteVis);
+        expect(result).toBeDefined();
+        console.log("deleteWorkspaceDashboardById >> ", result);
+  
         if((result as ResultSuccess).result !== "success"){
           stopTest = true;
           console.error("ERROR deleteWorkspaceDashboardById >> ", result);
+        }
+        else{
+          console.log("BORRADO >>> ", item);
         }
       }
     }
     else{
       console.error("El test se ha detenido por un error en la consulta de DELETE deleteWorkspaceDashboardById - dashboards_calls");
-    }
-
-  });
-});
-
-describe('DELETE - dashboards_calls', ()=>{
-  test('DELETE deleteWorkspaceDashboardById - CLONE!', async () => {
-
-    if(!stopTest){
-
-      let deleteVisTest : deleteVisualization = 'no';
-      
-      let bodyDELETE = {
-        idWorkspace: idWorkspaceTest,
-        idDashboard: idDashboardCloneTest,
-        deleteVis: deleteVisTest
-      }
-
-      const result = await deleteWorkspaceDashboardById(bodyDELETE.idWorkspace, bodyDELETE.idDashboard, bodyDELETE.deleteVis);
-      expect(result).toBeDefined();
-      //console.log("deleteWorkspaceDashboardById - CLONE >> ", result);
-
-      if(("result" in result)){
-        if((result as ResultSuccess).result !== "success"){
-          stopTest = true;
-          console.error("ERROR deleteWorkspaceDashboardById - CLONE >> ", result);
-        }
-      }
-    }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de DELETE deleteWorkspaceDashboardById - CLONE - dashboards_calls");
     }
 
   });
@@ -272,8 +227,8 @@ const generateRandomNumber = (min: number, max: number) => {
 const searchIdCloneDashboard = (listItems: Dashboard) => {
   for (const item of listItems.items) {
     if(item.name === "SCAN CLONE TEST"){
-      return item.id;
+      idDashboardListTest.push(item.id);
+      console.log("searchIdCloneDashboard >> Añadir id: ", item.id, " -- List: ", idDashboardListTest);
     }
   }
-  return "";
 }
