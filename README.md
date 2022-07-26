@@ -63,15 +63,43 @@ npm i @airinstitute/deepint-js-sdk
 ---
 ### 🚩 Usage
 ---
+You can import this package using the classic Javascript `require` or with `import` in the case you use Typescript as shown on the following examples:
 
 </br>
 
-### Example 🔻
+### Example Javascript 🔻
 ---
 
 ```js
 const deepint = require('@airinstitute/deepint-js-sdk');
 deepint.getWorkspaces()
+    .then(workspaces => {
+        console.log(workspaces);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+```
+
+### Example Typescript 🔻
+---
+
+```ts
+import * as deepint from '@airinstitute/deepint-js-sdk';
+deepint.getWorkspaces()
+    .then(workspaces => {
+        console.log(workspaces);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+```
+OR using desestructuring to get only the requested function
+
+
+```ts
+import {getWorkspaces} from '@airinstitute/deepint-js-sdk';
+getWorkspaces()
     .then(workspaces => {
         console.log(workspaces);
     })
