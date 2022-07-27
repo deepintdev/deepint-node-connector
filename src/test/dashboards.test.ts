@@ -4,12 +4,12 @@ Cargar sólo este fichero en específico: npm test -- dashboards.test.ts
 */
 
 import {
-    getWorkspaceDashboards, 
-    postWorkspaceDashboards, 
-    getWorkspaceDashboardById, 
-    postWorkspaceDashboardById, 
-    deleteWorkspaceDashboardById, 
-    postDashboardClone
+  getWorkspaceDashboards, 
+  postWorkspaceDashboards, 
+  getWorkspaceDashboardById, 
+  postWorkspaceDashboardById, 
+  deleteWorkspaceDashboardById, 
+  postDashboardClone
 } from '../dashboards_calls';
 
 import {
@@ -21,9 +21,9 @@ import {
 
 /* ------------------------------ VARIABLES ------------------------------ */
 let stopTest: boolean = false;
-let idWorkspaceTest: string = "00000181f6998342-1f83dffe-8d32362e-252c9ebd";
+let idWorkspaceTest: string = "00000181d3c6b79d-ebbd4d36-3f01b009-dddd65d2";
 let idDashboardTest: string = "";
-let idDashboardListTest: Array<string> = [];
+let listIdDashboardTest: Array<string> = [];
 
 /* --------------------------- DASHBOARDS CALLS ---------------------------*/
 
@@ -54,8 +54,8 @@ describe('POST - dashboards_calls', ()=>{
 
       if("dashboard_id" in result){
         idDashboardTest = result.dashboard_id;
-        idDashboardListTest.push(result.dashboard_id);
-        //console.log("Añadir id: ", idDashboardTest, " -- List: ", idDashboardListTest);
+        listIdDashboardTest.push(result.dashboard_id);
+        //console.log("Añadir id: ", idDashboardTest, " -- List: ", listIdDashboardTest);
       }
       else{
         stopTest = true;
@@ -174,9 +174,9 @@ describe('DELETE - dashboards_calls', ()=>{
     if(!stopTest){
       let deleteVisTest : deleteVisualization = 'no';
 
-      //console.log("idDashboardListTest >> ", idDashboardListTest);
+      //console.log("listIdDashboardTest >> ", listIdDashboardTest);
 
-      for (const item of idDashboardListTest) {
+      for (const item of listIdDashboardTest) {
         let bodyDELETE = {
           idWorkspace: idWorkspaceTest,
           idDashboard: item,
@@ -206,8 +206,8 @@ const generateRandomNumber = (min: number, max: number) => {
 const searchIdCloneDashboard = (listItems: Dashboard) => {
   for (const item of listItems.items) {
     if(item.name === "SCAN CLONE TEST"){
-      idDashboardListTest.push(item.id);
-      //console.log("searchIdCloneDashboard >> Añadir id: ", item.id, " -- List: ", idDashboardListTest);
+      listIdDashboardTest.push(item.id);
+      //console.log("searchIdCloneDashboard >> Añadir id: ", item.id, " -- List: ", listIdDashboardTest);
     }
   }
 }
