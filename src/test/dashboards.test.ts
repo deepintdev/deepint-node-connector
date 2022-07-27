@@ -62,9 +62,6 @@ describe('POST - dashboards_calls', ()=>{
         console.error("ERROR postWorkspaceDashboards >> ", result);
       }
     }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de POST postWorkspaceDashboards - dashboards_calls");
-    }
   });
 });
 
@@ -85,9 +82,6 @@ describe('GET - dashboards_calls', ()=>{
         stopTest = true;
         console.error("ERROR getWorkspaceDashboardById >> ", result); 
       }
-    }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de GET getWorkspaceDashboardById - dashboards_calls");
     }
 
   });
@@ -124,9 +118,6 @@ describe('POST - dashboards_calls', ()=>{
         console.error("ERROR postWorkspaceDashboardById >> ", result);
       }
     }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de POST postWorkspaceDashboardById - dashboards_calls");
-    }
 
   });
 });
@@ -148,9 +139,6 @@ describe('POST - dashboards_calls', ()=>{
         stopTest = true;
         console.error("ERROR postDashboardClone >> ", result);        
       }
-    }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de POST postDashboardClone - dashboards_calls");
     }
   });
 });
@@ -175,9 +163,6 @@ describe('GET - dashboards_calls', ()=>{
         stopTest = true;
         console.error("ERROR getWorkspaceDashboards 2 >> ", result);
       }
-    }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de GET getWorkspaceDashboards - 2 - dashboards_calls");
     }
 
   });
@@ -207,9 +192,6 @@ describe('DELETE - dashboards_calls', ()=>{
           console.error("ERROR deleteWorkspaceDashboardById >> ", result);
         }
       }
-    }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de DELETE deleteWorkspaceDashboardById - dashboards_calls");
     }
 
   });

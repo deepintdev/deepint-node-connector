@@ -25,7 +25,6 @@ import {
 } from '../sources_calls';
 
 import {
-    Feature,
     SourceToAdd,
     QueryTree,
     SourceDerived,
@@ -42,33 +41,53 @@ import {
     ResultSuccessSource,
     ResultSuccess,
     ResponseWorkspaceExport,
-    Source
+    //Source
 } from "../types"
 
 /* ------------------------------ VARIABLES ------------------------------ */
 let stopTest: boolean = false;
-let idWorkspaceTest: string = "00000181f6998342-1f83dffe-8d32362e-252c9ebd";
+let idWorkspaceTest: string = "00000181d3c6b79d-ebbd4d36-3f01b009-dddd65d2";
 let idSourceTest: string = "";
+let idSourceTest2: string = "";
 let listIdSourceTest: Array<string> = [];
 
 /* --------------------------- SOURCES CALLS ---------------------------*/
 
+// Crear tabla 1
 describe('POST - sources_calls', ()=>{
   test('POST postWorkspaceSource!', async () => {
     if(!stopTest){
       let numRandom: number = generateRandomNumber(1000, 9000);
-      
-      let featureTest : Feature = {
-        name: "MyFeatureTest "+numRandom,
-        type: 'unknown',
-        date_format: "2022-07-13T08:13:52.333Z",
-        indexed: false
-      };
 
       let sourceToAddTest : SourceToAdd = {
-        name: "deviceTest "+numRandom,
+        name: "deviceTableTest "+numRandom,
         description: "Sin descripción",
-        features: [featureTest]
+        features: [
+          {
+            name: "Colum 1",
+            type: 'unknown',
+            date_format: "2022-07-13T08:13:52.333Z",
+            indexed: false
+          },
+          {
+            name: "Colum 2",
+            type: 'unknown',
+            date_format: "2022-07-13T08:13:52.333Z",
+            indexed: false
+          },
+          {
+            name: "Colum 3",
+            type: 'unknown',
+            date_format: "2022-07-13T08:13:52.333Z",
+            indexed: false
+          },
+          {
+            name: "Colum 4",
+            type: 'unknown',
+            date_format: "2022-07-13T08:13:52.333Z",
+            indexed: false
+          },
+        ]
       };
       
       let bodyPOST = {
@@ -78,6 +97,7 @@ describe('POST - sources_calls', ()=>{
       
       const result = await postWorkspaceSource(bodyPOST.idWorkspace, sourceToAddTest);
       expect(result).toBeDefined();
+      console.log("postWorkspaceSource (table 1) >> ", result);
 
       if((result as ResultSuccessSource).result === "success"){
         idSourceTest = (result as ResultSuccessSource).source_id;
@@ -89,13 +109,39 @@ describe('POST - sources_calls', ()=>{
         console.error("ERROR postWorkspaceSource >> ", result);
       }
     }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de POST postWorkspaceSource - sources_calls");
-    }
 
   });
 });
 
+// Crear info tabla 1
+describe('POST - sources_calls', ()=>{
+  test('POST postSourceInstances!', async () => {
+
+    let updateDataSourceTest : UpdateDataSource = {
+      replace: false,
+      pk: "",
+      date_format: "",
+      data: [["Valor1", "Valor2","Valor3","Valor4"],["Valor5","Valor5","Valor5","Valor5"]]
+    };
+    
+    let bodyPOST = {
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
+      update: updateDataSourceTest
+    }
+    
+    const result = await postSourceInstances(bodyPOST.idWorkspace, bodyPOST.idSource, bodyPOST.update);
+    expect(result).toBeDefined();
+    console.log("postSourceInstances (values 1) >> ", result);
+
+    if(!((result as ResponseWorkspaceExport).result === "success")){
+      stopTest = true;
+      console.error("ERROR postSourceInstances  - JOIN >> ", result);
+    }
+  });
+});
+
+// Clonar la tabla 1
 describe('POST - sources_calls', ()=>{
   test('POST postSourceClone!', async () => {
     if(!stopTest){
@@ -107,7 +153,7 @@ describe('POST - sources_calls', ()=>{
       
       const result = await postSourceClone(bodyPOST.idWorkspace, bodyPOST.idSource, bodyPOST.name);
       expect(result).toBeDefined();
-      //console.log("postSourceClone >> ", result);
+      console.log("postSourceClone >> ", result);
 
       if((result as ResultSuccessSource).result === "success"){
         let idCloneTest = (result as ResultSuccessSource).source_id;
@@ -119,34 +165,32 @@ describe('POST - sources_calls', ()=>{
         console.error("ERROR postSourceClone >> ", result);
       }
     }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de POST postSourceClone - sources_calls");
-    }
 
   });
 });
 
+// Filtrar en la tabla 1
 describe('POST - sources_calls', ()=>{
-  test('POST postSourceDerived!', async () => {
+  test.skip('POST postSourceDerived - FILTER!', async () => {
     if(!stopTest){
       let numRandom: number = generateRandomNumber(1000, 9000);
 
       let queryTreeTest : QueryTree = {
-        type: "Tipo test",
-        operation: "Operation test",
-        left: 0,
-        right: "1",
+        type: "single",
+        operation: "cni",
+        left: 2,
+        right: "3",
         children: [""]
       };
 
       let sourceDerivedTest : SourceDerived = {
-        name: "SourceDerivedTest "+numRandom, 
+        name: "SourceDerivedFilterTest "+numRandom, 
         description: "Sin descripción",
         derived_type: "filter",
-        origin: "Origen test",
-        origin_b: "Origen B test",
+        origin: idSourceTest,
+        origin_b: "",
         query: queryTreeTest,
-        features: "Features test",
+        features: "0,2",
         field_a: 0,
         field_b: 1
       };
@@ -170,13 +214,244 @@ describe('POST - sources_calls', ()=>{
       }
       
     }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de POST postSourceDerived - sources_calls");
+
+  });
+});
+
+// Crear tabla 2
+describe('POST - sources_calls', ()=>{
+  test('POST postWorkspaceSource - JOIN!', async () => {
+    if(!stopTest){
+      let numRandom: number = generateRandomNumber(1000, 9000);
+
+      let sourceToAddTest : SourceToAdd = {
+        name: "deviceTableJoinTest "+numRandom,
+        description: "Sin descripción",
+        features: [
+          {
+            name: "Colum A",
+            type: 'unknown',
+            date_format: "2022-07-13T08:13:52.333Z",
+            indexed: false
+          },
+          {
+            name: "Colum 2",
+            type: 'unknown',
+            date_format: "2022-07-13T08:13:52.333Z",
+            indexed: false
+          },
+          {
+            name: "Colum B",
+            type: 'unknown',
+            date_format: "2022-07-13T08:13:52.333Z",
+            indexed: false
+          },
+          {
+            name: "Colum C",
+            type: 'unknown',
+            date_format: "2022-07-13T08:13:52.333Z",
+            indexed: false
+          },
+        ]
+      };
+      
+      let bodyPOST = {
+        idWorkspace: idWorkspaceTest,
+        source: sourceToAddTest
+      }
+      
+      const result = await postWorkspaceSource(bodyPOST.idWorkspace, sourceToAddTest);
+      expect(result).toBeDefined();
+      console.log("postWorkspaceSource (table 2) >> ", result);
+
+      if((result as ResultSuccessSource).result === "success"){
+        idSourceTest2 = (result as ResultSuccessSource).source_id;
+        listIdSourceTest.push(idSourceTest2);
+        console.log("Añadir id: ", idSourceTest2, " -- List: ", listIdSourceTest);
+      }
+      else{
+        stopTest = true;
+        console.error("ERROR postWorkspaceSource  - JOIN >> ", result);
+      }
     }
 
   });
 });
 
+// Crear info tabla 2
+describe('POST - sources_calls', ()=>{
+  test('POST postSourceInstances - 2!', async () => {
+
+    let updateDataSourceTest : UpdateDataSource = {
+      replace: false,
+      pk: "",
+      date_format: "",
+      data: [["Valor1", "Valor2","Valor3","Valor4"],["Valor5","Valor5","Valor5","Valor5"]]
+    };
+    
+    let bodyPOST = {
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest2,
+      update: updateDataSourceTest
+    }
+    
+    const result = await postSourceInstances(bodyPOST.idWorkspace, bodyPOST.idSource, bodyPOST.update);
+    expect(result).toBeDefined();
+    console.log("postSourceInstances - (values 2) >> ", result);
+
+    if(!((result as ResponseWorkspaceExport).result === "success")){
+      stopTest = true;
+      console.error("ERROR postSourceInstances  - JOIN >> ", result);
+    }
+
+  });
+});
+
+// Fusionar tabla 1 y 2 (JOIN)
+describe('POST - sources_calls', ()=>{
+  test.skip('POST postSourceDerived - JOIN!', async () => {
+    if(!stopTest){
+      let numRandom: number = generateRandomNumber(1000, 9000);
+
+      let queryTreeTest : QueryTree = {
+        type: "single",
+        operation: "cni",
+        left: 0,
+        right: "",
+        children: [""]
+      };
+
+      let sourceDerivedTest : SourceDerived = {
+        name: "SourceDerivedJoinTest "+numRandom, 
+        description: "Sin descripción",
+        derived_type: "join",
+        origin: idSourceTest,
+        origin_b: idSourceTest2,
+        query: queryTreeTest,
+        features: "0,1,2,3,4,5,6,7",
+        field_a: 1,
+        field_b: 1
+      };
+      
+      let bodyPOST = {
+        idWorkspace: idWorkspaceTest,
+        source: sourceDerivedTest
+      }
+      
+      const result = await postSourceDerived(bodyPOST.idWorkspace, bodyPOST.source);
+      expect(result).toBeDefined();
+      console.log("postSourceDerived SourceDerivedJoinTest "+numRandom," >> ", result);
+
+      if((result as ResponseWorkspaceExport).result === "success"){
+        let idTaskDerivedJoin = (result as ResponseWorkspaceExport).task_id;
+        listIdSourceTest.push(idTaskDerivedJoin);
+        console.log("Añadir id: ", idTaskDerivedJoin, " -- List: ", listIdSourceTest);
+      }
+      else{
+        stopTest = true;
+        console.error("ERROR postSourceDerived - JOIN >> ", result);
+      }
+    }
+  });
+});
+
+// Extender tabla (EXTEND)
+describe('POST - sources_calls', ()=>{
+  test.skip('POST postSourceDerived - EXTEND!', async () => {
+    if(!stopTest){
+      let numRandom: number = generateRandomNumber(1000, 9000);
+
+      let queryTreeTest : QueryTree = {
+        type: "single",
+        operation: "cni",
+        left: 0,
+        right: "",
+        children: [""]
+      };
+
+      let sourceDerivedTest : SourceDerived = {
+        name: "SourceDerivedExtendTest "+numRandom, 
+        description: "Sin descripción",
+        derived_type: "extend",
+        origin: idSourceTest,
+        origin_b: idSourceTest2,
+        query: queryTreeTest,
+        features: "0,1,2,3,4,5,6,7",
+        field_a: 1,
+        field_b: 1
+      };
+      
+      let bodyPOST = {
+        idWorkspace: idWorkspaceTest,
+        source: sourceDerivedTest
+      }
+      
+      const result = await postSourceDerived(bodyPOST.idWorkspace, bodyPOST.source);
+      expect(result).toBeDefined();
+      console.log("postSourceDerived SourceDerivedExtendTest "+numRandom," >> ", result);
+
+      if((result as ResponseWorkspaceExport).result === "success"){
+        let idTaskDerivedExtend = (result as ResponseWorkspaceExport).task_id;
+        listIdSourceTest.push(idTaskDerivedExtend);
+        console.log("Añadir id: ", idTaskDerivedExtend, " -- List: ", listIdSourceTest);
+      }
+      else{
+        stopTest = true;
+        console.error("ERROR postSourceDerived - EXTEND>> ", result);
+      }
+    }
+  });
+});
+
+// Extender tabla (MERGE)
+describe('POST - sources_calls', ()=>{
+  test.skip('POST postSourceDerived - MERGE!', async () => {
+    if(!stopTest){
+      let numRandom: number = generateRandomNumber(1000, 9000);
+
+      let queryTreeTest : QueryTree = {
+        type: "single",
+        operation: "cni",
+        left: 0,
+        right: "",
+        children: [""]
+      };
+
+      let sourceDerivedTest : SourceDerived = {
+        name: "SourceDerivedMergeTest "+numRandom, 
+        description: "Sin descripción",
+        derived_type: "merge",
+        origin: idSourceTest,
+        origin_b: idSourceTest2,
+        query: queryTreeTest,
+        features: "0,1,2,3,4,5,6,7",
+        field_a: 1,
+        field_b: 1
+      };
+      
+      let bodyPOST = {
+        idWorkspace: idWorkspaceTest,
+        source: sourceDerivedTest
+      }
+      
+      const result = await postSourceDerived(bodyPOST.idWorkspace, bodyPOST.source);
+      expect(result).toBeDefined();
+      console.log("postSourceDerived SourceDerivedMergeTest "+numRandom," >> ", result);
+
+      if((result as ResponseWorkspaceExport).result === "success"){
+        let idTaskDerivedMerge = (result as ResponseWorkspaceExport).task_id;
+        listIdSourceTest.push(idTaskDerivedMerge);
+        console.log("Añadir id: ", idTaskDerivedMerge, " -- List: ", listIdSourceTest);
+      }
+      else{
+        stopTest = true;
+        console.error("ERROR postSourceDerived - MERGE>> ", result);
+      }
+    }
+  });
+});
+
+//
 describe('POST - sources_calls', ()=>{
   test.skip('POST postSourceExternal!', async () => {
 
@@ -200,9 +475,20 @@ describe('POST - sources_calls', ()=>{
     const result = await postSourceExternal(bodyPOST.idWorkspace, bodyPOST.source);
     expect(result).toBeDefined();
     console.log("postSourceExternal >> ", result);
+
+    if((result as ResultSuccessSource).result === "success"){
+      let idsourceExternal = (result as ResultSuccessSource).source_id;
+      listIdSourceTest.push(idsourceExternal);
+      console.log("Añadir id: ", idsourceExternal, " -- List: ", listIdSourceTest);
+    }
+    else{
+      stopTest = true;
+      console.error("ERROR postSourceExternal >> ", result);
+    }
   });
 });
 
+// Es crear una tabla a partir de Mongo, MQQT, INFLUX, MYSQL o archivos
 describe('POST - sources_calls', ()=>{
   test.skip('POST postSourceOther!', async () => {
 
@@ -255,22 +541,33 @@ describe('POST - sources_calls', ()=>{
     };
     
     let bodyPOST = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
+      idWorkspace: idWorkspaceTest,
       source: sourceOtherTest
     }
     
     const result = await postSourceOther(bodyPOST.idWorkspace, bodyPOST.source);
     expect(result).toBeDefined();
     console.log("postSourceOther >> ", result);
+
+    if((result as ResultSuccessSource).result === "success"){
+      let idsourceOther = (result as ResultSuccessSource).source_id;
+      listIdSourceTest.push(idsourceOther);
+      console.log("Añadir id: ", idsourceOther, " -- List: ", listIdSourceTest);
+    }
+    else{
+      stopTest = true;
+      console.error("ERROR postSourceOther >> ", result);
+    }
   });
 });
 
+// Devolver datos de la tabla 1
 describe('GET - sources_calls', ()=>{
-  test.skip('GET getWorkspaceSourceById!', async () => {
+  test('GET getWorkspaceSourceById!', async () => {
 
     let bodyGET = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
     };
 
     const result = await getWorkspaceSourceById(bodyGET.idWorkspace, bodyGET.idSource);
@@ -279,40 +576,49 @@ describe('GET - sources_calls', ()=>{
   });
 });
 
+// Actualiza el nombre y descripción de la tabla 1 por el ID
 describe('POST - sources_calls', ()=>{
-  test.skip('POST postWorkspaceSourceById!', async () => {
+  test('POST postWorkspaceSourceById!', async () => {
 
     let sourceSetTest : SourceSet = {
-      name: "Source Set test",
-      description: "Sin descripción"
+      name: "deviceTableTestCHANGE",
+      description: "Descripción modificada"
     };
     
     let bodyPOST = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
       source: sourceSetTest
     }
     
     const result = await postWorkspaceSourceById(bodyPOST.idWorkspace, bodyPOST.idSource, bodyPOST.source);
     expect(result).toBeDefined();
     console.log("postWorkspaceSourceById >> ", result);
+
+    if(!((result as ResultSuccess).result === "success")){
+      stopTest = true;
+      console.error("ERROR postWorkspaceSourceById >> ", result);
+    }
   });
 });
 
+// 
 describe('GET - sources_calls', ()=>{
   test.skip('GET getConnectionSourceById!', async () => {
 
     let bodyGET = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
     };
 
     const result = await getConnectionSourceById(bodyGET.idWorkspace, bodyGET.idSource);
     expect(result).toBeDefined();
     console.log("getConnectionSourceById >> ", result); // ??
+
   });
 });
 
+//
 describe('POST - sources_calls', ()=>{
   test.skip('POST postConnectionSourceById!', async () => {
 
@@ -321,31 +627,33 @@ describe('POST - sources_calls', ()=>{
     };
     
     let bodyPOST = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
       source: resultConnectionTest
     }
     
     const result = await postConnectionSourceById(bodyPOST.idWorkspace, bodyPOST.idSource, bodyPOST.source);
     expect(result).toBeDefined();
-    console.log("postConnectionSourceById >> ", result);
+    console.log("postConnectionSourceById >> ", result); // ??
   });
 });
 
+//
 describe('GET - sources_calls', ()=>{
   test.skip('GET getAutoUpdateSourceById!', async () => {
 
     let bodyGET = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
     };
 
     const result = await getAutoUpdateSourceById(bodyGET.idWorkspace, bodyGET.idSource);
     expect(result).toBeDefined();
-    console.log("getAutoUpdateSourceById >> ", result); 
+    console.log("getAutoUpdateSourceById >> ", result); // ??
   });
 });
 
+//
 describe('POST - sources_calls', ()=>{
   test.skip('POST postAutoUpdateSourceById!', async () => {
 
@@ -391,27 +699,27 @@ describe('POST - sources_calls', ()=>{
     };
     
     let bodyPOST = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
       source: configurationSourceResultTest
     }
     
     const result = await postAutoUpdateSourceById(bodyPOST.idWorkspace, bodyPOST.idSource, bodyPOST.source);
     expect(result).toBeDefined();
-    console.log("postAutoUpdateSourceById >> ", result);
+    console.log("postAutoUpdateSourceById >> ", result); // ??
   });
 });
 
-
+// Sustituir todas las columnas de una tabla por las indicadas
 describe('POST - sources_calls', ()=>{
-  test.skip('POST postTransformFeaturesSourcesById!', async () => {
+  test('POST postTransformFeaturesSourcesById!', async () => {
 
     let featureMappedTest : FeatureMapped = {
-      name: "Source Other Test",
+      name: "Colum X",
       type: "unknown",
       indexed: false,
-      date_format: "",
-      mapped_to: 10
+      date_format: "2022-07-13T08:13:52.333Z",
+      mapped_to: -1
     };
 
     let transformFeaturesTest : TransformFeatures = {
@@ -419,23 +727,29 @@ describe('POST - sources_calls', ()=>{
     };
     
     let bodyPOST = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
       source: transformFeaturesTest
     }
     
     const result = await postTransformFeaturesSourcesById(bodyPOST.idWorkspace, bodyPOST.idSource, bodyPOST.source);
     expect(result).toBeDefined();
     console.log("postTransformFeaturesSourcesById >> ", result);
+
+    if(!((result as ResponseWorkspaceExport).result === "success")){
+      stopTest = true;
+      console.error("ERROR postTransformFeaturesSourcesById >> ", result);
+    }
   });
 });
 
+//
 describe('GET - sources_calls', ()=>{
-  test.skip('GET getSourceInstances!', async () => {
+  test('GET getSourceInstances!', async () => {
 
     let bodyGET = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
       select: "",
       where: "",
       order_by: "",
@@ -457,43 +771,7 @@ describe('GET - sources_calls', ()=>{
   });
 });
 
-describe('POST - sources_calls', ()=>{
-  test.skip('POST postSourceInstances!', async () => {
-
-    let updateDataSourceTest : UpdateDataSource = {
-      replace: false,
-      pk: "",
-      date_format: "",
-      data: [[""]]
-    };
-    
-    let bodyPOST = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
-      update: updateDataSourceTest
-    }
-    
-    const result = await postSourceInstances(bodyPOST.idWorkspace, bodyPOST.idSource, bodyPOST.update);
-    expect(result).toBeDefined();
-    console.log("postSourceInstances >> ", result);
-  });
-});
-
-describe('DELETE - dashboards_calls', ()=>{
-  test.skip('DELETE deleteSourceInstances!', async () => {
-    
-    let bodyDELETE = {
-      idWorkspace: "00000181f6998342-1f83dffe-8d32362e-252c9ebd",
-      idSource: "00000181f6a225d5-ce9dcdf0-249550c5-1bffc0ed",
-      where: ""
-    }
-
-    const result = await deleteSourceInstances(bodyDELETE.idWorkspace, bodyDELETE.idSource, bodyDELETE.where);
-    expect(result).toBeDefined();
-    console.log("deleteSourceInstances >> ", result);
-  });
-});
-
+//
 describe('POST - sources_calls', ()=>{
   test.skip('POST postExternalSources!', async () => {
 
@@ -503,15 +781,12 @@ describe('POST - sources_calls', ()=>{
     
     const result = await postExternalSources(bodyPOST.source);
     expect(result).toBeDefined();
-    console.log("postExternalSources >> ", result);
+    console.log("postExternalSources >> ", result); // ??
   });
 });
 
-
-
-
-
 /* -------------------------------------------------------------------------------------------------------- */
+// Mostrar información de los workspaces de sources
 describe('GET - sources_calls', ()=>{
   test('GET getWorkspaceSources!', async () => {
     if(!stopTest){
@@ -523,52 +798,68 @@ describe('GET - sources_calls', ()=>{
 
       const result = await getWorkspaceSources(bodyGET.id, bodyGET.page, bodyGET.limit);
       expect(result).toBeDefined();
-      console.log("getWorkspaceSources >> ", result);
+      //console.log("getWorkspaceSources >> ", result);
 
       if(("items" in result)){
-        searchIdCloneDashboard((result as Source));
+        //searchIdCloneDashboard((result as Source));
       }
       else{
         stopTest = true;
         console.error("ERROR getWorkspaceSources ",stopTest," >> ", result);
       }
     }
-    else{
-      console.error("El test se ha detenido por un error en la consulta de GET getWorkspaceSources - sources_calls");
-    }
 
   });
 });
 
+// Eliminar filas de tablas
 describe('DELETE - dashboards_calls', ()=>{
-  test('DELETE deleteWorkspaceSourceById!', async () => {
-    if(!stopTest){
+  test('DELETE deleteSourceInstances!', async () => {
 
-      console.log("DELETE listIdSourceTest >> ", listIdSourceTest);
+    let bodyDELETE = {
+      idWorkspace: idWorkspaceTest,
+      idSource: idSourceTest,
+      where: '{"type": "single", "operation":"eq","left":0,"right":"Valor5","children": []}'
+    }
 
-      for (const item of listIdSourceTest) {
-        let bodyDELETE = {
-          idWorkspace: idWorkspaceTest,
-          idSource: item,
-        }
-  
-        const result = await deleteWorkspaceSourceById(bodyDELETE.idWorkspace, bodyDELETE.idSource);
-        expect(result).toBeDefined();
-        console.log("deleteWorkspaceSourceById ",item," >> ", result);
-        
-        if((result as ResultSuccess).result !== "success"){
-          stopTest = true;
-          console.error("ERROR deleteWorkspaceSourceById >> ", result);
-        }
-        else{
-          console.log("BORRADO >>> ", item);
-        }
-      }
+    const result = await deleteSourceInstances(bodyDELETE.idWorkspace, bodyDELETE.idSource, bodyDELETE.where);
+    expect(result).toBeDefined();
+    //console.log("deleteSourceInstances >> ", result);
+    
+    if((result as ResultSuccess).result !== "success"){
+      stopTest = true;
+      console.error("ERROR deleteSourceInstances >> ", result);
     }
     else{
-      console.error("El test se ha detenido por un error en la consulta de DELETE deleteWorkspaceSourceById - sources_calls");
+      console.log("deleteSourceInstances >> BORRADO >>> ", idSourceTest);
     }
+  });
+});
 
+// Borrar todos los datos creados en POST
+describe('DELETE - dashboards_calls', ()=>{
+  test('DELETE deleteWorkspaceSourceById!', async () => {
+
+    console.log("DELETE listIdSourceTest > ", listIdSourceTest);
+
+    for (const item of listIdSourceTest) {
+      let bodyDELETE = {
+        idWorkspace: idWorkspaceTest,
+        idSource: item,
+      }
+
+      const result = await deleteWorkspaceSourceById(bodyDELETE.idWorkspace, bodyDELETE.idSource);
+      expect(result).toBeDefined();
+      //console.log("deleteWorkspaceSourceById ",item," > ", result);
+      
+      if((result as ResultSuccess).result !== "success"){
+        stopTest = true;
+        console.error("ERROR deleteWorkspaceSourceById: ",item," > ", result);
+      }
+      else{
+        console.log("deleteWorkspaceSourceById > BORRADO >>> ", item);
+      }
+    }
   });
 });
 
@@ -577,6 +868,7 @@ const generateRandomNumber = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/*
 const searchIdCloneDashboard = (listItems: Source) => {
   for (const item of listItems.items) {
     if(item.name === "SCAN SOURCE CLONE"){
@@ -585,3 +877,4 @@ const searchIdCloneDashboard = (listItems: Source) => {
     }
   }
 }
+*/
