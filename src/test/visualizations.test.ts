@@ -19,6 +19,9 @@ import {
 
 /* ------------------------------ VARIABLES ------------------------------ */
 let idWorkspaceTest: string = "00000181d3c6b79d-ebbd4d36-3f01b009-dddd65d2";
+let idDashboardTest: string = "000001823fbf59fb-56e58111-95411216-582b2786" // Introducir uno existente en la fuente de Dashboard
+let idVisualizationsTest: string = "";
+let listIdVisualizationTest: Array<string> = [];
 let visualizationConfigTestEmpty: VisualizationConfig = {
   type: '',
   instances: 0,
@@ -116,9 +119,6 @@ let visualizationConfigTestEmpty: VisualizationConfig = {
   cmc: [],
   categoryMap: []
 };
-let idDashboardTest: string = "000001823fbf59fb-56e58111-95411216-582b2786" // Introducir uno existente en la fuente de Dashboard
-let idVisualizationsTest: string = "";
-let listIdVisualizationTest: Array<string> = [];
 
 /* --------------------------- VISUALIZATIONS CALLS ---------------------------*/
 describe('POST - visualizations_calls', ()=>{
