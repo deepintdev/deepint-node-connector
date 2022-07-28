@@ -1,7 +1,7 @@
 import { Response } from 'node-fetch';
 import { Config } from "./config";
 import fetch from 'node-fetch';
-import { ResponseError, ResponseErrorSource, ResultSuccess, ResultSuccessSource, Visualization, VisualizationImport, VisualizationResult } from './types';
+import { ResponseError, ResponseErrorSource, ResultSuccess, ResultSuccessVisualization, Visualization, VisualizationImport, VisualizationResult } from './types';
 
 /**
  * Lists the visualizations of a workspace
@@ -45,7 +45,7 @@ const postWorkspaceVisualizations = async (idWorkspace:string,visualization:Visu
         },
         body: JSON.stringify(visualization),
     })
-    const respuesta: ResultSuccessSource| ResponseErrorSource | ResponseError = await response.json();  // ResponseError devuelve aunque en la documentación de la API dice que es un ResponseErrorSource
+    const respuesta: ResultSuccessVisualization| ResponseErrorSource | ResponseError = await response.json();  // ResponseError devuelve aunque en la documentación de la API dice que es un ResponseErrorSource
     return respuesta;
 }
 
@@ -78,7 +78,7 @@ const getWorkspaceVisualizationById = async (idWorkspace:string,idVisualization:
  */
 const postWorkspaceVisualizationById = async (idWorkspace:string,idVisualization:string,visualization:VisualizationImport)=> {
     let url = (new URL("workspace/".concat(idWorkspace+"/visualization/"+idVisualization), Config.getInstance().deepintURL)).toString()
-
+    console.log(url)
     const response: Response = await fetch(url, {
         method: 'POST',
         headers: {  
@@ -131,7 +131,7 @@ const postCloneVisualizationById = async (idWorkspace:string,idVisualization:str
         },
         body: JSON.stringify(name),
     })
-    const respuesta: ResultSuccessSource| ResponseErrorSource | ResponseError  = await response.json();  // ResponseError devuelve aunque en la documentación de la API dice que es un ResponseErrorSource
+    const respuesta: ResultSuccessVisualization| ResponseErrorSource | ResponseError  = await response.json();  // ResponseError devuelve aunque en la documentación de la API dice que es un ResponseErrorSource
     return respuesta;
 }
 

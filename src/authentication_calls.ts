@@ -1,6 +1,6 @@
 import { Response } from 'node-fetch';
 import fetch from 'node-fetch';
-import { BearerToken, ResponseError, ResponseErrorSource, ResultSuccess, RevokeToken } from './types';
+import { BearerToken, ResponseError, ResponseErrorSource, ResultSuccess, ResultSuccessToken, RevokeToken } from './types';
 
 /**
  * Obtains an authentication token given a bearer token. You can obtain a bearer token when the user gives authorization to your application to access their account.
@@ -18,7 +18,7 @@ const postLoginToken = async (token:BearerToken) => {
         },
         body: JSON.stringify(token),
     })
-    const respuesta:  ResultSuccess| ResponseError | ResponseErrorSource = await response.json();
+    const respuesta:  ResultSuccessToken | ResponseError | ResponseErrorSource = await response.json();
     return respuesta;
 }
 

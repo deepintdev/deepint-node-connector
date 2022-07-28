@@ -59,7 +59,7 @@ const deleteWorkspaceTaskById = async (idWorkspace:string,idTask:string)=> {
     let url = (new URL("workspace/".concat(idWorkspace+"/tasks/"+idTask), Config.getInstance().deepintURL)).toString()
 
     const response: Response = await fetch(url, {
-        method: 'GET',
+        method: 'DELETE',
         headers: {  
             'Accept': 'application/json',
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
