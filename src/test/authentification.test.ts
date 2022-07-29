@@ -14,9 +14,9 @@ import {
 } from "../types"
 
 /* ------------------------------ VARIABLES ------------------------------ */
-let clientIdTest: string = "0000018243b0081c-957f8647-12b4bbf8-93e2eb0b";
-let clientSecretTest: string = "tniKHDfZlJMxJ-XVkt6vRd05JPNFUlsZJWhFbJCq2fRpBd904XwTnSClqGw1udcK36wBy02OBon_Wna-zw5aSg";
-let bearerTest: string = "e5ywjgGjNbC5LB1aMPeAGm0ZAGFvNCllBd-hCR6bLzYBDgQKASgUkrvpk8vONzGk72HGBowVkLAXWBIT9MnE-o"; // Generar uno nuevo cada vez
+let clientIdTest: string = process.env.CLIENT_ID as string;
+let clientSecretTest: string = process.env.CLIENT_SECRET as string;
+let bearerTest: string = process.env.BEARER_TOKEN as string; // Generar uno nuevo cada vez
 let expirationTest: string = "never";
 let tokenTest: string = "";
 
