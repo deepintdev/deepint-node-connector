@@ -7,12 +7,12 @@ import {
   getWorkspaceModels,
   postWorkspaceModels,
   getWorkspaceModelById,
-  //postWorkspaceModelById,
+  postWorkspaceModelById,
   deleteWorkspaceModelById,
   getModelEvaluation,
   getModelPredict,
-  //postModelBatchPredict,
-  //postModelPredict1d
+  postModelBatchPredict,
+  postModelPredict1d
 } from '../models_calls';
 
 import {
@@ -55,7 +55,7 @@ describe('POST - models_calls', ()=>{
     
     const result = await postWorkspaceModels(bodyPOST.idWorkspace, bodyPOST.model);
     expect(result).toBeDefined();
-    console.log("postWorkspaceModels: MyDashboardTest ",numRandom," >> ", result);
+    //console.log("postWorkspaceModels: MyDashboardTest ",numRandom," >> ", result);
     expect(result).toHaveProperty('task_id');
 
     if("task_id" in result){
@@ -75,7 +75,7 @@ describe('GET - models_calls', ()=>{
 
     const result = await getWorkspaceModels(bodyGET.id, bodyGET.page, bodyGET.limit);
     expect(result).toBeDefined();
-    console.log("getWorkspaceModels >> ", result);
+    //console.log("getWorkspaceModels >> ", result);
     expect(result).toHaveProperty('items');
 
     if(("items" in result)){
@@ -85,6 +85,34 @@ describe('GET - models_calls', ()=>{
       else{
         console.log("getWorkspaceModels: la lista está vacía.");
       }
+    }
+
+  });
+});
+
+describe('POST - models_calls', ()=>{
+  test('POST postWorkspaceModelById!', async () => {
+
+    let numRandom: number = generateRandomNumber(1000, 9000);
+
+    let modelTest = {
+      name: "Workspace Model MODIFICADO",
+      description: "Descripción de modelo de testeo modificado"
+    }
+    
+    let bodyPOST = {
+      idWorkspace: idWorkspaceTest,
+      idModel: idModelTest,
+      model: modelTest
+    }
+    
+    const result = await postWorkspaceModelById(bodyPOST.idWorkspace, bodyPOST.idModel, bodyPOST.model);
+    expect(result).toBeDefined();
+    //console.log("postWorkspaceModelById: MODIFICADO >> ", result);
+    expect(result).toHaveProperty('task_id');
+
+    if("task_id" in result){
+      idNameModelTEmp = "Workspace Model " + numRandom;
     }
 
   });
@@ -100,7 +128,7 @@ describe('GET - models_calls', ()=>{
 
       const result = await getWorkspaceModelById(bodyGET.id, bodyGET.idModel);
       expect(result).toBeDefined();
-      console.log("getWorkspaceModelById >> ", result);
+      //console.log("getWorkspaceModelById >> ", result);
       expect(result).toHaveProperty('id');
     }
     else{
@@ -120,13 +148,51 @@ describe('GET - models_calls', ()=>{
 
       const result = await getModelEvaluation(bodyGET.id, bodyGET.idModel);
       expect(result).toBeDefined();
-      console.log("getModelEvaluation >> ", result);
+      //console.log("getModelEvaluation >> ", result);
       expect(result).toHaveProperty('evaluation');
     }
     else{
       console.error("ERROR getModelEvaluation: No se ha encontrado un id para el modelo: ", idModelTest);
       throw new Error('ERROR getModelEvaluation: No se ha encontrado un id para el modelo.')
     }
+  });
+});
+
+describe('POST - models_calls', ()=>{
+  test('POST postModelBatchPredict!', async () => {
+    let bodyPOST = {
+      idWorkspace: idWorkspaceTest,
+      idModel: idModelTest,
+      data: {
+        data: [
+          { "inputs": [0.8] }
+        ]
+      }
+    }
+    
+    const result = await postModelBatchPredict(bodyPOST.idWorkspace, bodyPOST.idModel, bodyPOST.data);
+    expect(result).toBeDefined();
+    //console.log("postModelBatchPredict >> ", result);
+    expect(result).toHaveProperty('outputs');
+  });
+});
+
+describe('POST - models_calls', ()=>{
+  test('POST postModelPredict1d!', async () => {
+    let bodyPOST = {
+      idWorkspace: idWorkspaceTest,
+      idModel: idModelTest,
+      model: {
+        inputs: [ 0.8 ],
+        vary: 3,
+        values: [ 0.9 ]
+      }
+    }
+    
+    const result = await postModelPredict1d(bodyPOST.idWorkspace, bodyPOST.idModel, bodyPOST.model);
+    expect(result).toBeDefined();
+    //console.log("postModelPredict1d >> ", result);
+    expect(result).toHaveProperty('outputs');
   });
 });
 
@@ -141,7 +207,7 @@ describe('GET - models_calls', ()=>{
 
       const result = await getModelPredict(bodyGET.id, bodyGET.idModel, bodyGET.inputs);
       expect(result).toBeDefined();
-      console.log("getModelPredict >> ", result);
+      //console.log("getModelPredict >> ", result);
       expect(result).toHaveProperty('output');
     }
     else{
@@ -154,7 +220,7 @@ describe('GET - models_calls', ()=>{
 describe('DELETE - models_calls', ()=>{
   test('DELETE deleteWorkspaceModelById!', async () => {
 
-    console.log("listIdModelsTest >> ", listIdModelsTest);
+    //console.log("listIdModelsTest >> ", listIdModelsTest);
 
     if(listIdModelsTest.length > 0){
       for (const item of listIdModelsTest) {
@@ -165,7 +231,7 @@ describe('DELETE - models_calls', ()=>{
 
         const result = await deleteWorkspaceModelById(bodyDELETE.idWorkspace, bodyDELETE.idModel);
         expect(result).toBeDefined();
-        console.log("deleteWorkspaceModelById ",item," >> ", result);
+        //console.log("deleteWorkspaceModelById ",item," >> ", result);
         expect(result).toHaveProperty('result', 'success');
       }
     }
