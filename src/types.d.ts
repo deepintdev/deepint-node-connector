@@ -150,6 +150,8 @@ export type SourceToAdd = {
 
 export type ResultSuccessSource = ResultSuccess & { source_id: string; }
 
+export type ResultSuccessVisualization = ResultSuccess & { visualization_id: string; }
+
 export interface SourceDerived extends Omit<SourceToAdd, "features"> {
     derived_type: string;
     origin: string;
@@ -663,6 +665,8 @@ export interface BearerToken {
     bearer: string;
     expiration: string;
 }
+
+export type ResultSuccessToken = ResultSuccess & {auth_token: string} 
 
 export interface RevokeToken extends Omit<BearerToken, ("bearer" | "expiration")>{
     auth_token: string;

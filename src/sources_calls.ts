@@ -1,7 +1,7 @@
 import { Response } from 'node-fetch';
 import { Config } from "./config";
 import fetch from 'node-fetch';
-import { AutoUpdateConfiguration, ConfigurationSourceResult, Instances, ResponseError, ResponseErrorSource, ResponseWorkspaceExport, ResultConnection, ResultSuccess, ResultSuccessSource, Source, SourceDerived, SourceExternal, SourceOther, SourceResult, SourceSet, SourceToAdd, TransformFeatures, UpdateDataSource} from './types';
+import { AutoUpdateConfiguration, ConfigurationSourceResult, Instances, ResponseError, ResponseErrorSource, ResponseWorkspaceExport, ResponseWorkspaceImport, ResultConnection, ResultSuccess, ResultSuccessSource, Source, SourceDerived, SourceExternal, SourceOther, SourceResult, SourceSet, SourceToAdd, TransformFeatures, UpdateDataSource} from './types';
 
 
 /**
@@ -134,7 +134,7 @@ const postSourceOther = async (idWorkspace:string, source:SourceOther) => {
         },
         body: JSON.stringify(source)
     })
-    const respuesta: ResultSuccessSource | ResponseError = await response.json();  
+    const respuesta: ResponseWorkspaceImport | ResponseError = await response.json();  
     return respuesta;
 }
 
