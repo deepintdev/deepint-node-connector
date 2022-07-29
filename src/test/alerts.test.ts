@@ -65,8 +65,6 @@ describe('POST - alerts_calls', ()=>{
 describe('POST - alerts_calls', ()=>{
   test('POST postWorkspaceAlertById!', async () => {
 
-    let numRandom: number = generateRandomNumber(1000, 9000);
-
     let alertsImportTest = {
       name: "Alert-Test-MODIFICADO",
       description: "Es una alerta de prueba para el test",
