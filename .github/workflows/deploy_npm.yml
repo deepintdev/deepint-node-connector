@@ -32,8 +32,8 @@ jobs:
       - name: Run workspaces unit tests
         run: npm test -- workspaces.test.ts
         env:
-          X_AUTH_TOKEN: ${{ secrets.DEEPINT_AUTH_TOKEN }}
-          X_DEEPINT_ORGANIZATION: ${{ secrets.DEEPINT_TEST_ORGANIZATION }}
+          X_AUTH_TOKEN: ${{ secrets.DEEPINT_TOKEN }}
+          X_DEEPINT_ORGANIZATION: ${{ secrets.DEEPINT_ORGANIZATION }}
           CLIENT_ID: ${{ secrets.DEEPINT_CLIENT_ID }}
           CLIENT_SECRET: ${{ secrets.DEEPINT_CLIENT_SECRET }}
           BEARER_TOKEN: ${{ secrets.DEEPINT_BEARER_TOKEN }}
