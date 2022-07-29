@@ -1,12 +1,38 @@
 name: Publish Package to npmjs
+
 on:
   push:
     branches:
       - main
     paths-ignore:
       - 'package*.json'
+
 jobs:
+  avoid_reduncy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.10.
+        with:
+          access_token: ${{ github.token }}
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependecies
+        run: npm ci
+      - name: Run unit test
+        run: npm run test
+        env:
+          X_AUTH_TOKEN: ${{ secrets.DEEPINT_TOKEN }}
+          X_DEEPINT_ORGANIZATION: ${{ secrets.DEEPINT_ORGANIZATION }}
+          CLIENT_ID: ${{ secrets.DEEPINT_CLIENT_ID }}
+          CLIENT_SECRET: ${{ secrets.DEEPINT_CLIENT_SECRET }}
+          BEARER_TOKEN: ${{ secrets.DEEPINT_BEARER_TOKEN }}
+
   build:
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -17,14 +43,21 @@ jobs:
         with:
           node-version: '16.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: git config user.email ${{ secrets.GIT_EMAIL }}
-      - run: git config user.name ${{ secrets.GIT_NAME }}
-      - run: npm version patch
-      - run: git push
-      - run: npm ci
-      - run: npm run build
-      - run: cp src/types.d.ts dist/
-      - run: ls dist
-      - run: npm publish --access public
+      - name: Set git email
+        run: git config user.email ${{ secrets.GIT_EMAIL }}
+      - name: Set github username
+        run: git config user.name ${{ secrets.GIT_NAME }}
+      - name: Run npm version patch to increase version
+        run: npm version patch
+      - name: Update version on repository
+        run: git push
+      - name: Install node dependecies
+        run: npm ci
+      - name: Build dist package to be deployed
+        run: npm run build
+      - name: Add types to dist package
+        run: cp src/types.d.ts dist/
+      - name: Publish package to npm registry
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
