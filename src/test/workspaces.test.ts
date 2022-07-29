@@ -56,7 +56,7 @@ describe('POST - workspaces_calls', ()=>{  // Sin permisos
 });
 
 describe('POST - workspaces_calls', ()=>{
-  test('POST postWorkspacesImport!', async () => { // Sin permisos
+  test.skip('POST postWorkspacesImport!', async () => { // Sin permisos
     let numRandom: number = generateRandomNumber(1000, 9000);
 
     let bodyPOST = {
@@ -112,7 +112,7 @@ describe('GET - workspaces_calls', ()=>{
 });
 
 describe('POST - workspaces_calls', ()=>{
-  test('POST postIframe!', async () => {
+  test.skip('POST postIframe!', async () => {
     let testQueryTree = {
       type: "",
       operation: "",
