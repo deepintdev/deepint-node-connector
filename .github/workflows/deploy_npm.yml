@@ -29,6 +29,11 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependecies
         run: npm ci
+      - name: Check organization
+        run: echo $X_DEEPINT_ORGANIZATION
+        env:
+          X_AUTH_TOKEN: ${{ secrets.DEEPINT_TOKEN }}
+          X_DEEPINT_ORGANIZATION: ${{ secrets.DEEPINT_ORGANIZATION }}
       - name: Run workspaces unit tests
         run: npm test -- workspaces.test.ts
         env:
