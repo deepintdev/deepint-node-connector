@@ -17,7 +17,7 @@ const getWorkspaceSources = async (idWorkspace:string,page:number=0,limit:number
         limit: limit+"",
     });
 
-    const response: Response = await fetch(url, {
+    const response: Response | PromiseRejectedResult= await fetch(url, {
         method: 'GET',
         headers: {  
             'Accept': 'application/json',
@@ -37,7 +37,7 @@ const getWorkspaceSources = async (idWorkspace:string,page:number=0,limit:number
 const postWorkspaceSource = async (idWorkspace:string,source:SourceToAdd)=> {
     let url = (new URL("workspace/".concat(idWorkspace+"/sources"), Config.getInstance().deepintURL)).toString()
 
-    const response: Response = await fetch(url, {
+    const response: Response | {error: any} = await fetch(url, {
         method: 'POST',
         headers: {  
             'Accept': 'application/json',
@@ -45,7 +45,12 @@ const postWorkspaceSource = async (idWorkspace:string,source:SourceToAdd)=> {
             'x-auth-token': Config.getInstance().X_AUTH_TOKEN
         },
         body: JSON.stringify(source)
+    }).catch(err => {
+        return {error: err}
     })
+    if("error" in response){
+        return Promise.reject(response.error)
+    }
     const respuesta: ResultSuccessSource| ResponseError = await response.json();
     return respuesta;
 }
