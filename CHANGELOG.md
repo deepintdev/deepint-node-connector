@@ -3,6 +3,7 @@
 ## 1.1.0
 
 ### Changed
+- The MongoDB source tests read their connection data from TEST_MONGO_URL, TEST_MONGO_USER, TEST_MONGO_PASSWORD and TEST_MONGO_HOST instead of having it in the repository.
 - The platform formerly known as Deep Intelligence is now AIR-Core. The default API URL is now `https://app.air-core.io/api/v1/` (was `https://app.deepint.net/api/v1/`).
 - `postLoginToken` and `postRevokeToken` now use the OAuth endpoints of the configured instance (`/api/oauth/login` and `/api/oauth/revoke`, by default on `https://app.air-core.io`) instead of a hard-coded `app.deepint.net` host.
 - README and package metadata updated to the AIR-Core name. The hotlinked logo from deepint.net was removed from the README.
