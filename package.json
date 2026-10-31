@@ -1,7 +1,7 @@
 {
   "name": "@airinstitute/deepint-js-sdk",
-  "version": "1.0.35",
-  "description": "Deep Intelligence API calls",
+  "version": "1.1.0",
+  "description": "AIR-Core (formerly Deep Intelligence) API calls",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "directories": {
@@ -21,6 +21,8 @@
     "build": "tsc --outDir dist --module commonjs"
   },
   "keywords": [
+    "air-core",
+    "aircore",
     "deepint",
     "api",
     "deep intelligence",

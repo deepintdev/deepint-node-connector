@@ -1,5 +1,6 @@
 import { Response } from 'node-fetch';
 import fetch from 'node-fetch';
+import { Config } from './config';
 import { BearerToken, ResponseError, ResponseErrorSource, ResultSuccess, ResultSuccessToken, RevokeToken } from './types';
 
 /**
@@ -8,7 +9,7 @@ import { BearerToken, ResponseError, ResponseErrorSource, ResultSuccess, ResultS
  * @returns Success message or Error message
  */
 const postLoginToken = async (token:BearerToken) => {
-    let url = 'https://app.deepint.net/api/oauth/login'
+    const url = Config.getInstance().getOAuthURL('login');
 
     const response: Response = await fetch(url, {
         method: 'POST',
@@ -28,7 +29,7 @@ const postLoginToken = async (token:BearerToken) => {
  * @returns Success message or Error message
  */
 const postRevokeToken = async (token:RevokeToken) => {
-    let url = 'https://app.deepint.net/api/oauth/revoke'
+    const url = Config.getInstance().getOAuthURL('revoke');
 
     const response: Response = await fetch(url, {
         method: 'POST',

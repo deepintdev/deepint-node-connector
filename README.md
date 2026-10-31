@@ -1,16 +1,10 @@
 
-# Deep Intelligence Javascript SDK
-
-<div align="center">
-    <img src="https://deepint.net/sites/default/files/logo2.svg" alt="Logo" width="300" height="200">
-</div>
-
-</br>
+# AIR-Core Javascript SDK
 
 This is a [Node.js](https://nodejs.org/en/) module available through the
-[npm registry](https://www.npmjs.com/) for connect with the [Deep Intelligence's API](https://app.deepint.net/api/v1/).
+[npm registry](https://www.npmjs.com/) for connect with the [AIR-Core API](https://app.air-core.io/api/v1/).
 
-This module lets you connect the platform [Deep Intelligence](https://deepint.net/),using their functions, to your projects.
+This module lets you connect the platform [AIR-Core](https://app.air-core.io) (formerly Deep Intelligence), using their functions, to your projects.
 It encapsulates by means of functions the different calls to the API in order to obtain the required data from it.
 
 </br>
@@ -219,22 +213,25 @@ To configure the module, set the following environment variables:
 | Variable Name | Description |
 |---|---|
 | X_AUTH_TOKEN |Token Authorization to connect to the API | 
-| X_DEEPINT_ORGANIZATION | Organization Token | 
-| DEEPINT_API_URL | Deep Intelligence API URL, default is `https://app.deepint.net/api/v1/` |
+| X_AIRCORE_ORGANIZATION | Organization Token (legacy name `X_DEEPINT_ORGANIZATION` is still supported) | 
+| AIRCORE_API_URL | AIR-Core API URL, default is `https://app.air-core.io/api/v1/` (legacy name `DEEPINT_API_URL` is still supported). Must end with `/` |
+| AIRCORE_OAUTH_URL | Optional. Base URL of the OAuth endpoints used by `postLoginToken` and `postRevokeToken`. Defaults to `<API URL>/../oauth/`, i.e. `https://app.air-core.io/api/oauth/` |
+
+When both the `AIRCORE_*` and the legacy `DEEPINT_*` variables are set, the `AIRCORE_*` value is used. To keep using a legacy Deep Intelligence instance, set `AIRCORE_API_URL` (or `DEEPINT_API_URL`) to `https://app.deepint.net/api/v1/`.
 
 In case you can not set environment variable and still want to use this SDK you can set this parameters directly on your code, like this:
 
 ```js
 const deepint = require('@airinstitute/deepint-js-sdk');
-// If you did not setted X_AUTH_TOKEN && X_DEEPINT_ORGANIZATION env variables in order to be able to use the SDK you can set this variables on code in the next way
+// If you did not setted X_AUTH_TOKEN && X_AIRCORE_ORGANIZATION env variables in order to be able to use the SDK you can set this variables on code in the next way
 
-deepint.Config.getInstance().setToken("<Your Deep Intelligence user token>");
-deepint.Config.getInstance().setOrganization("<Your Deep Intelligence organization ID>");
+deepint.Config.getInstance().setToken("<Your AIR-Core user token>");
+deepint.Config.getInstance().setOrganization("<Your AIR-Core organization ID>");
 
 // This method it is only for development use in production please set the envionment variables
 ```
 
-Even this method is available and working its highly recomended to set this variables through environment variables due it's more safety and this last method if used with text plain can expose your Deep Intelligence credentials.
+Even this method is available and working its highly recomended to set this variables through environment variables due it's more safety and this last method if used with text plain can expose your AIR-Core credentials.
 
 </br>
 
@@ -296,7 +293,7 @@ To express our gratitude to the following people involved in this project:
 </br>
 
 <div align="center">
-  <a href="#deep-intelligence-javascript-sdk">
+  <a href="#air-core-javascript-sdk">
     <img 
       src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/20/Circle-icons-arrow-up.svg/512px-Circle-icons-arrow-up.svg.png?20160314153305" 
       alt="Logo"
