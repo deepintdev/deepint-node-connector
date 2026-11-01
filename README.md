@@ -4,7 +4,7 @@
 This is a [Node.js](https://nodejs.org/en/) module available through the
 [npm registry](https://www.npmjs.com/) for connect with the [AIR-Core API](https://app.air-core.io/api/v1/).
 
-This module lets you connect the platform [AIR-Core](https://app.air-core.io) (formerly Deep Intelligence), using their functions, to your projects.
+This module lets you connect the platform [AIR-Core](https://app.air-core.io), the data and AI platform maintained by [AIR Institute](https://air-institute.com), to your projects.
 It encapsulates by means of functions the different calls to the API in order to obtain the required data from it.
 
 </br>
@@ -217,7 +217,7 @@ To configure the module, set the following environment variables:
 | AIRCORE_API_URL | AIR-Core API URL, default is `https://app.air-core.io/api/v1/` (legacy name `DEEPINT_API_URL` is still supported). Must end with `/` |
 | AIRCORE_OAUTH_URL | Optional. Base URL of the OAuth endpoints used by `postLoginToken` and `postRevokeToken`. Defaults to `<API URL>/../oauth/`, i.e. `https://app.air-core.io/api/oauth/` |
 
-When both the `AIRCORE_*` and the legacy `DEEPINT_*` variables are set, the `AIRCORE_*` value is used. To keep using a legacy Deep Intelligence instance, set `AIRCORE_API_URL` (or `DEEPINT_API_URL`) to `https://app.deepint.net/api/v1/`.
+When both the `AIRCORE_*` and the legacy `DEEPINT_*` variables are set, the `AIRCORE_*` value is used. To use another AIR-Core instance (for example an on-premises one), set `AIRCORE_API_URL` to its API URL, such as `https://aircore.example.com/api/v1/`.
 
 In case you can not set environment variable and still want to use this SDK you can set this parameters directly on your code, like this:
 
